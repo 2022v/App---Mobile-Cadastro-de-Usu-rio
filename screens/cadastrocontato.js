@@ -43,12 +43,12 @@ async function inserirDados(){
   await axios.post('http://professornilson.com/testeservico/clientes', {
       nome: getNome,
       telefone: getTelefone,
-      cpf: getCpf
+      email: getEmail
     })
     .then(function (response) {
       setNome('');
-      setCpf('');
-      setTelefone(''); 
+      setTelefone('');
+      setEmail(''); 
     })
     .catch(function (error) {
       console.log(error)
