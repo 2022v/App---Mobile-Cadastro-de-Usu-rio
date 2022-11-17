@@ -56,11 +56,13 @@ const AlteracaoExclusao = ({navigation}) => {
       <View style={{top:"80px", flex: 2 }} >
 
 <Button title="Alterar"  style={{ paddingTop: 10 }} />
-<Button title="Excluir"  buttonStyle={{backgroundColor: 'red'}} style={{ paddingTop: 10, color:'red' }} />
+<Button title="Excluir"  buttonStyle={{backgroundColor: 'red'}} style={{ paddingTop: 10, color:'red' }} 
 
-</View>
-  
-  
+
+
+/>
+
+</View>  
       </View> 
     );
   };
@@ -74,8 +76,7 @@ const AlteracaoExclusao = ({navigation}) => {
   });
 
 
-
-
+  
 
 
   export default AlteracaoExclusao;

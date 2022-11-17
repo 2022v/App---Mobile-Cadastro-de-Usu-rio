@@ -12,8 +12,11 @@ import AlteracaoExclusao from "./screens/AltExContatos";
 
 
 
-
 const LoginScreen = ({navigation}) => {
+
+  const [login, setLogin] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
   return (
     <View style={[styles.container, {
       flexDirection: "column"
@@ -56,7 +59,8 @@ const LoginScreen = ({navigation}) => {
 
       <View style={{top:"60px", flex: 2 }} >
 
-        <Button  title="Logar" onPress={()=>navigation.navigate('Lista de Contatos')} />
+        <Button  title="Logar" onPress={()=>navigation.navigate('Lista de Contatos')} 
+/>
 
         <Button title="Cadastre-se"  onPress={()=>navigation.navigate('Usuario')} style={{ paddingTop: 10}} buttonStyle={{backgroundColor: 'red'}} />
 

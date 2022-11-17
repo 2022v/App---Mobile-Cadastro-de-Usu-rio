@@ -1,13 +1,63 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Avatar } from "react-native-elements";
 import { Input, Button } from 'react-native-elements';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import axios from 'axios';
+
+ 
+ const CadastroContatosScreen = ({route, navigation}) => {
+
+  const [getNome,setNome] = useState();
+const [getCpf,setCpf] = useState();
+const [getTelefone,setTelefone] = useState();
+const [getEmail,setEmail] = useState();
+const [getId,setId] = useState();
+const [getAlterar,setAlterar] = useState();
+
+useEffect(()=>{
+  if(route.params){
+      const { nome } =  route.params 
+      const { telefone } =  route.params 
+      const { email } =  route.params 
+      const { cpf } =  route.params 
+      const { id } =  route.params
+      const { alterar } =  route.params
+      
+
+      setNome(nome)
+      setTelefone(telefone)
+      setEmail(email)
+      setCpf(cpf)
+      setId(id)
+      setAlterar(alterar)
+     
+  }
+
+},[]) 
+
+async function inserirDados(){
+        
+  await axios.post('http://professornilson.com/testeservico/clientes', {
+      nome: getNome,
+      telefone: getTelefone,
+      cpf: getCpf
+    })
+    .then(function (response) {
+      setNome('');
+      setCpf('');
+      setTelefone(''); 
+    })
+    .catch(function (error) {
+      console.log(error)
+    });     
+  
+}
 
 
-const CadastroContatosScreen = ({navigation}) => {
+    
     return (
       <View style={[styles.container, {
         flexDirection: "column"
@@ -32,37 +82,53 @@ const CadastroContatosScreen = ({navigation}) => {
               placeholder=''
               leftIcon={{ type: 'font-awesome', name: '' }}
               textAlign="center"
+              onChangeText={text => setNome(text)}
+              value={getNome}
             />
-  
-            <Text style={{ paddingTop: 30, textAlign: "left" }}>Email</Text>
+
+          <Text style={{ paddingTop: 30, textAlign: "left" }}>Telefone</Text>
             <Input
               placeholder=''
               leftIcon={{ type: 'font-awesome', name: '' }}
               textAlign="center"
+              onChangeText={text => setTelefone(text)}
+              value={getTelefone}
             />
 
-
-            <Text style={{ paddingTop: 30, textAlign: "left" }}>Telefone</Text>
+          <Text style={{ paddingTop: 30, textAlign: "left" }}>Email</Text>
             <Input
               placeholder=''
               leftIcon={{ type: 'font-awesome', name: '' }}
               textAlign="center"
+              onChangeText={text => setEmail(text)}
+              value={getEmail}
             />
+ 
+
         
         </View>
   
   
        
-      <View style={{top:"80px", flex: 2 }} >
+        <Button  style={{paddingTop:20}}
+            title="< Voltar"
+            onPress={()=>navigation.navigate('ListaContatos')}
+            ></Button>
 
-<Button title="Salvar"  style={{ paddingTop: 10 }} />
+
+{ !getAlterar ? (
+    <Button style={{paddingTop:20}}
+    title="Salvar"
+    onPress={() => inserirDados()}
+    />
+    ):null}
+
+
+
 
 </View>
-  
-  
-      </View> 
-    );
-  };
+  );
+};
   
 
   const styles = StyleSheet.create({
@@ -72,9 +138,7 @@ const CadastroContatosScreen = ({navigation}) => {
     },
   });
 
+  export default CadastroContatosScreen; 
 
 
-
-
-
-  export default CadastroContatosScreen;
+   

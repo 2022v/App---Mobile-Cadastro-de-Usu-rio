@@ -1,4 +1,4 @@
-import React from "react";
+import {React, useEffect, useState} from "react";
 import { StyleSheet, Text, View, Image } from 'react-native';
 
 import { NavigationContainer } from '@react-navigation/native';
@@ -7,39 +7,29 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import { Card, ListItem, Button, Icon, Avatar } from 'react-native-elements'
 import { ListItem, Avatar, Button } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/FontAwesome';
-
-
-
-const list = [
-    {
-      name: 'Patricia Tavares',
-      avatar_url: 'https://as1.ftcdn.net/v2/jpg/01/16/24/44/1000_F_116244459_pywR1e0T3H7FPk3LTMjG6jsL3UchDpht.jpg',
-      subtitle: '81 998765332'
-
-    },
-    {
-      name: 'Marcos Andrade',
-      avatar_url: 'https://cdn-icons-png.flaticon.com/512/147/147133.png',
-      subtitle: '81 988553424'
-    },
-    {
-        name: 'Rodrigo Antunes',
-        avatar_url: 'https://cdn1.vectorstock.com/i/1000x1000/23/70/man-avatar-icon-flat-vector-19152370.jpg',
-        subtitle: '81 987765525'
-      },
-
-      {
-        name: 'Turma ADS',
-        avatar_url: 'https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg',
-        subtitle: '81 12345678'
-      },
-   // more items
-  ]
+import axios from 'axios';
 
 
 
 
 const ListaContatos = ({navigation}) => {
+
+
+  const [getData, setData] = useState([]);
+
+    useEffect(()=>{
+        
+        async function resgatarDados(){
+            const result = await axios(
+                'http://professornilson.com/testeservico/clientes',
+              );
+              setData(result.data);
+        }
+        resgatarDados();
+    }, []) 
+    
+
+
     return (
       <View style={[styles.container, {
         flexDirection: "column"
@@ -55,23 +45,24 @@ const ListaContatos = ({navigation}) => {
            />
           
           </Text>
-       
-         
-
-
-
-        
+             
           </View>
 
 
           <View style={{ flex: 2, backgroundColor: "white", alignItems: "center", }}>
           {
-    list.map((l, i) => (
+    getData.map((l, i) => (
       <ListItem key={i} bottomDivider  onPress={()=>navigation.navigate('alteracao')}>
-        <Avatar source={{uri: l.avatar_url}} />
+        <Avatar source={{uri: "https://cdn5.vectorstock.com/i/1000x1000/01/69/businesswoman-character-avatar-icon-vector-12800169.jpg"}} />
         <ListItem.Content>
-          <ListItem.Title>{l.name}</ListItem.Title>
-          <ListItem.Subtitle>{l.subtitle}</ListItem.Subtitle>
+        <ListItem.Title>{l.id}</ListItem.Title>
+          <ListItem.Title>{l.nome}</ListItem.Title>
+          <ListItem.Subtitle>{l.cpf}</ListItem.Subtitle>
+          <ListItem.Subtitle>{l.email}</ListItem.Subtitle>
+          <ListItem.Subtitle>{l.telefone}</ListItem.Subtitle>
+          <ListItem.Subtitle>{l.id_usuario}</ListItem.Subtitle>
+          <ListItem.Subtitle>{l.datacadastro}</ListItem.Subtitle>
+          
         </ListItem.Content>
       </ListItem>
     ))
